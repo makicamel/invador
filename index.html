@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>invador game</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <h1>invador game</h1>
+    <div id="enemy_field" style="border: 1px solid white";>
+        <div id="enemy_section">
+                <img class="enm enm3 leftest"><img class="enm enm3"><img class="enm enm3"><img class="enm enm3"><img class="enm enm3"><img class="enm enm3"><img class="enm enm3"><img class="enm enm3 rightest"><br>
+                <img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><br>
+                <img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><img class="enm enm1"><br>
+                <img class="enm enm2"><img class="enm enm2"><img class="enm enm2"><img class="enm enm2"><img class="enm enm2"><img class="enm enm2"><img class="enm enm2"><img class="enm enm2"><br>
+                <img class="enm enm2 kore"><img class="enm enm2"><img class="enm enm2"><img class="enm enm2"><img class="enm enm2"><img class="enm enm2"><img class="enm enm2"><img class="enm enm2">
+        </div>
+        <br>
+    </div>
+
+    <img src="img/member.png" class="member" style="position:relative; top:300px;">
+
+<input type="button" onclick="kirikae()" value="start/stop" style="position:relative; top:350px;"></input>
+<input type="button" onclick="replace()" value="test" style="position:relative; top:350px; display:none;"></input>
+<input type="button" onclick="clear()" value="clear" style="position:relative; top:350px; display:none;"></input>
+
+<input type="button" id="stock" value="test" style="position:relative; top:350px;"></input>
+<img src="img/bullet1.png" class="mybullet">
+<script src="js/jquery-3.2.1.js"></script>
+<!--script src="js/test.js"></script-->
+<script src="js/main.js"></script>
+<!--script>enemyMap.init();</script-->
+</body>
+</html>

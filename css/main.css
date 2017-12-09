@@ -1,0 +1,69 @@
+html, body{
+    color: #fff;
+    background-color: #000;
+    margin: 0;
+    padding: 0;
+}
+#enemy_field{
+    margin: 0 auto;
+    width: 90vw;
+}
+#enemy_section{
+    border: 1px solid salmon;
+    left: 5vw;
+    top: 100px;
+    position: absolute;
+    display: inline;
+    white-space: nowrap;
+}
+.enm1,
+.enm2,
+.enm3{
+    padding: 8px 6px;
+}
+.enm1{
+    content: url('../img/enemy1.png');
+    width: 32px;
+    height: 24px;
+}
+.enm1.active{
+    content: url('../img/enemy1-2.png');
+}
+.enm2{
+    content: url('../img/enemy2.png');
+    width: 32px;
+    height: 22px;
+}
+.enm2.active{
+    content: url('../img/enemy2-2.png');
+}
+.enm3{
+    content: url('../img/enemy3.png');
+    width: 26px;
+    height: 26px;
+    margin-right: 6px;
+}
+.enm3.active{
+    content: url('../img/enemy3-2.png');
+}
+.hit{
+    content: url('../img/hit.png');
+}
+.blank{
+    content: url('../img/blank.png');
+}
+.member{
+    width: 40px;
+    height: 22px;
+    position: relative;
+}
+.mybullet{
+    width: 2px;
+    height: 6px;
+    display: none;
+    position: absolute;
+    top: 250px;
+}
+.mybullet.active{
+    display: block;
+}
