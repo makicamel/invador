@@ -1,7 +1,7 @@
 
 document.onkeydown = keydown;
 var stopFlg = false;
-var endEnmChanged = false;
+var timer;
 
 var enemyMap = {
     map: [[3,1],[3,1],[3,1],
@@ -45,48 +45,36 @@ var enemy = {
         'R': $('#enemy_field').offset().left + $('#enemy_field').innerWidth()
     },
     enmSecWidth: $('#enemy_section').innerWidth(),
-    // enmSecPos: {
-    //     'L': $('#enemy_section').offset().left,
-    //     'R': $('#enemy_section').offset().left + $('#enemy_section').innerWidth()
-    // },
     enmSecPos: {
         'L': $('.leftest').offset().left,
         'R': $('.rightest').offset().left + $('.rightest').innerWidth()
     },
+    enmEndPos: {
+        'L': 0,
+        'R': 0
+    },
     directToR: true,
     init: function(){
-        enemy.enmSecPos.L = $('.leftest').offset().left;
-        enemy.enmSecPos.R = $('.rightest').offset().left + $('.rightest').innerWidth();
-        // setTimeout(this.moveRender,700);
+        enemy.enmEndPos.L = $('.leftest').offset().left;
+        enemy.enmEndPos.R = $('.rightest').offset().left + $('.rightest').innerWidth();
     },
     moveRender: function(){
         if (stopFlg) { return false;}
         enemy.movePos();
         $('.enm').toggleClass('active');
-        setTimeout(enemy.moveRender,700);
+        timer = setTimeout(enemy.moveRender,700);
     },
     movePos: function(){
         var move_px = 8;
-        if (endEnmChanged) { enemy.init(); endEnmChanged = false; }
-        else {
-            if (enemy.directToR){ enemy.directToR = (enemy.enmSecPos.R + move_px) <= enemy.fldPos.R ? true : false; }
-            else               { enemy.directToR = (enemy.enmSecPos.L - move_px) <= enemy.fldPos.L ? true : false; }
-
-            console.log(enemy.directToR);
-            console.log('leftestのoffset.leftは' + $('.leftest').offset().left);
-            console.log('enemy.enmSecPos.Lには' + enemy.enmSecPos.L);
-            console.log(enemy.enmSecPos.L - move_px);
-            console.log(enemy.fldPos.L);
-            if (enemy.directToR){ enemy.enmSecPos.L += move_px; enemy.enmSecPos.R += move_px; }
-            else               { enemy.enmSecPos.L -= move_px; enemy.enmSecPos.R -= move_px; }
-            $('#enemy_section').css('left', enemy.enmSecPos.L + 'px');
-        }
-    },
-    nn: function(){
-        console.log(enemy.enmSecPos.L);
+        if (enemy.directToR){ enemy.directToR = (enemy.enmEndPos.R + move_px) <= enemy.fldPos.R ? true : false; }
+        else                { enemy.directToR = (enemy.enmEndPos.L - move_px) <= enemy.fldPos.L ? true : false; }
+        if (enemy.directToR){ enemy.enmSecPos.L += move_px; enemy.enmSecPos.R += move_px; enemy.enmEndPos.L += move_px; enemy.enmEndPos.R += move_px; }
+        else               { enemy.enmSecPos.L -= move_px; enemy.enmSecPos.R -= move_px; enemy.enmEndPos.L -= move_px; enemy.enmEndPos.R -= move_px; }
+        $('#enemy_section').css('left', enemy.enmSecPos.L + 'px');
     }
 }
-//enemy.moveRender();
+enemy.init();
+enemy.moveRender();
 
 // ** todo コード整理 **
 function keydown(){
@@ -110,6 +98,7 @@ function bangBullet(){
     var myplane = $('.member');
     var top = myplane.offset().top - 4;
     var left = myplane.offset().left + myplane.innerWidth()/2;
+    var hit;
     if (mybullet.is(':visible')){ return false; }
     mybullet.css('left', left + 'px');
     mybullet.show();
@@ -120,11 +109,12 @@ function bangBullet(){
         if(checkHit() || top < 0) { initBullet(); }
         else { hit = setTimeout(callback, 50); }
     }
-    var hit = setTimeout(callback,0);
+    hit = setTimeout(callback,0);
 
     function initBullet(){
         clearTimeout(hit);
         top = myplane.offset().top - 4;
+        mybullet.css('top', top + 'px');
         mybullet.hide();
     }
     function checkHit(){
@@ -138,13 +128,16 @@ function bangBullet(){
                 hitObj.removeClass('enm').removeClass('active').addClass('hit');
                 setTimeout(function(){ hitObj.removeClass('hit').addClass('blank'); },250);
                 result = true;
-                if (hitObj.hasClass('leftest')) { 
-                    console.log('１番ひだりのがやられたよ');
+                if (hitObj.hasClass('leftest')) {
                     hitObj.removeClass('leftest');
                     hitObj.next().addClass('leftest');
-                    endEnmChanged = true;
+                    enemy.init();
                 }
-                else if (hitObj.hasClass('rightest')){ console.log('1番みぎのがやられたよ'); }
+                else if (hitObj.hasClass('rightest')){
+                    hitObj.removeClass('rightest');
+                    hitObj.prev().addClass('rightest');
+                    enemy.init();
+                }
             }
         })
         return result;
